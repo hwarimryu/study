@@ -5,39 +5,36 @@ import java.util.Stack;
 class Solution {
     public int[] asteroidCollision(int[] asteroids) {
     
-        
+        if(asteroids.length==0){
+            return asteroids;
+        }
         Stack<Integer> left= new Stack<Integer>();
-        left.push(asteroids[0]);
-        for(int i=1;i<asteroids.length;i++){
-            int tmp=asteroids[i];
 
-            if(left.isEmpty()){
-                left.push(tmp);
+        int top,tmp,size;
+        for(int i=0;i<asteroids.length;i++){
+            
+            if(!left.isEmpty()){
+                top=left.peek();
+            }else{
+                left.push(asteroids[i]);
                 continue;
             }
             
-            if(tmp>0){
-                //go right인 경우
+            tmp=asteroids[i];
+            if(tmp>0||top<0){//go right인 경우 || //top이 go left
                 left.push(tmp);
-            }else{
-                //go left인 경우
-                if(left.peek()<0){
-                    //top도 go left
-                    left.push(tmp);
-                }
-                else if(left.peek()==(tmp*-1)){
-                    //절대값 같으면 둘다 사라짐
-                    left.pop();
-                }
-                else if(left.peek()<(tmp*-1)){
-                    //절대값으로..
+            }else{//go left인 경우
+                if(top<(tmp*-1)){//절대값으로..
                     left.pop();
                     i--;
+                }
+                else if(top==(tmp*-1)){
+                    left.pop();
                 }
             }
         }
     
-        int size=left.size();
+        size=left.size();
 
         int[] answer= new int[size];
         for(int i=1;i<=size;i++){
