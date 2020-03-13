@@ -1,6 +1,11 @@
+import java.util.Stack;
+
 // https://leetcode.com/problems/asteroid-collision/
 
 class Solution {
+    public static void main(){
+        
+    }
     public int[] asteroidCollision(int[] asteroids) {
     
         
